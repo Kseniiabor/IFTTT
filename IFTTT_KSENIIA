@@ -1,0 +1,79 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <InternetButton.h>
+
+InternetButton b = InternetButton();
+uint8_t button1 = 0;
+uint8_t button2 = 0;
+uint8_t button3 = 0;
+uint8_t button4 = 0;
+uint8_t buttonAll = 0;
+int gaugeCount = 0;
+
+
+// The code in setup() runs once when the device is powered on or reset. Used for setting up states, modes, etc
+void setup() {
+    // Tell b to get everything ready to go
+    b.begin();
+
+}
+
+/* loop(), in contrast to setup(), runs all the time. Over and over again. 
+Remember this particularly if there are things you DON'T want to run a lot. Like Particle.publish() */
+void loop() {
+    
+    if(b.allButtonsOn()){
+        if(!buttonAll){
+            buttonAll = 1;
+            Particle.publish("allbuttons",NULL, 60, PRIVATE);
+            b.rainbow(10);
+            delay(100);
+            b.allLedsOff();
+        }
+    }
+    else {buttonAll = 0;}
+   
+    if(b.buttonOn(1)){
+        if(!button1){
+            button1 = 1;
+            Particle.publish("button1",NULL, 60, PRIVATE);
+            
+            b.ledOn(12,50,0,0);
+            delay(100);
+            b.ledOff(12);
+        
+    }
+    else {button1 = 0;}
+    }
+    if(b.buttonOn(2)){ 
+        if(!button2){
+            button2 = 1;
+            Particle.publish("button2",NULL, 60, PRIVATE);
+            b.ledOn(3,0,50,0);
+            delay(100);
+            b.ledOff(3);
+        }
+    }
+    else {button2 = 0;}
+    
+    if(b.buttonOn(3)){
+        if(!button3){
+            button3 = 1;
+            Particle.publish("button3",NULL, 60, PRIVATE);
+            b.ledOn(6,0,0,50);
+            delay(100);
+            b.ledOff(6);
+        }
+    }
+    else {button3 = 0;}
+    
+    if(b.buttonOn(4)){
+        if(!button4){
+            button4 = 1;
+            Particle.publish("button4",NULL, 60, PRIVATE);
+            b.ledOn(9,30,30,30);
+            delay(100);
+            b.ledOff(9);
+        }
+    }
+    else {button4 = 0;}
+}
